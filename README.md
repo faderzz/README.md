@@ -1,11 +1,19 @@
 ### Hello. 👋
 #### I am a LUA, HTML and CSS developer. Currently, I am learning JavaScript.
 ![](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=faderzz&theme=monokai)
-- uses: lowlighter/metrics@latest
-  with:
-    # ... other options
-    plugin_achievements: yes
-    plugin_achievements_threshold: B       # Display achievements with rank B or higher
-    plugin_achievements_secrets: yes       # Display unlocked secrets achievements
-    plugin_achievements_ignored: octonaut  # Hide octonaut achievement
-    plugin_achievements_limit: 0           # Display all unlocked achievement matching threshold and secrets params
+name: Metrics
+on:
+  # Schedule updates (each hour)
+  schedule: [{cron: "0 * * * *"}]
+  # Lines below let you run workflow manually and on each commit (optional)
+  workflow_dispatch:
+  push: {branches: ["master", "main"]}
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      # See action.yml for all options
+      - uses: lowlighter/metrics@latest
+        with:
+          # Your GitHub token
+          token: ${{ secrets.METRICS_TOKEN }}
